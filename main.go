@@ -19,6 +19,7 @@ func main() {
 	r.Use(middlewares.Cors())
 	initRouter(r) // 初始化路由
 	err := r.Run(":8080")
+
 	if err != nil {
 		wg.Wait()
 		utils.Log.Fatal("服务启动失败 " + err.Error())
