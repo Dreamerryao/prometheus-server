@@ -3,7 +3,6 @@ package main
 import (
 	"sync"
 
-	"github.com/Dreamerryao/prometheus-server/dal"
 	"github.com/Dreamerryao/prometheus-server/middlewares"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
@@ -29,7 +28,7 @@ func main() {
 func configInit(wg *sync.WaitGroup) {
 	utils.LogConfig() // 初始化日志配置
 	go func() {
-		dal.MongoDBInit() // mongodb 初始化，连接数据库
+		utils.MongoDBInit() // mongodb 初始化，连接数据库
 		wg.Done()
 	}()
 }
