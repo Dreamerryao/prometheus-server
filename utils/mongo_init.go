@@ -3,28 +3,42 @@ package utils
 import (
 	"context"
 	"fmt"
-	"sync"
 	"time"
 
+	"github.com/Dreamerryao/prometheus-server/common"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var once sync.Once
-var ConnQuery *mongo.Client
-var MongoDefaultCtx context.Context
-
 // MongoDBInit 数据库连接
-func MongoDBInit() {
-	once.Do(func() {
-		MongoDefaultCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-		ConnQuery, err := mongo.Connect(MongoDefaultCtx, options.Client().ApplyURI("mongodb://localhost:27017"))
-		defer func() {
-			if err = ConnQuery.Disconnect(MongoDefaultCtx); err != nil {
-				panic(err)
-			}
-		}()
-		fmt.Println("数据库连接成功")
-	})
+func MongoDBInit() *mongo.Client {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	uri := fmt.Sprintf(
+		"mongodb://%s:%s@%s:%d/?authSource=admin&authMechanism=SCRAM-SHA-256",
+		common.MongodbUser,
+		common.MongodbPwd,
+		"127.0.0.1",
+		27017,
+	)
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
+	if err != nil {
+		fmt.Printf("connect mongodb error: %v\n", err)
+	}
+	defer func() {
+		if err = client.Disconnect(ctx); err != nil {
+			panic(err)
+		}
+	}()
+	fmt.Println("Connected to MongoDB!")
+	return client
+}
+
+var ConnQuery *mongo.Client = MongoDBInit()
+
+func OpenCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	prometheusDb := client.Database("prometheus")
+	var collection *mongo.Collection = prometheusDb.Collection(collectionName)
+
+	return collection
 }
