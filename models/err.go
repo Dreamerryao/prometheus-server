@@ -7,7 +7,7 @@ type JsError struct {
 	Stack     string `json:"stack" bson:"stack"`
 }
 
-type ResouceError struct {
+type ResourceError struct {
 	Base         `json:,inline`
 	ErrorType    string `json:"error_type" bson:"error_type" validate:"required"` //错误类型
 	FileName     string `json:"file_name" bson:"file_name"`                       //访问的文件名
