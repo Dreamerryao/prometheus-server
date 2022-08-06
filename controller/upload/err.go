@@ -6,15 +6,15 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Dreamerryao/prometheus-server/common"
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var errCollection *mongo.Collection = utils.OpenCollection(utils.ConnQuery, "error")
-
 func CreateError(c *gin.Context) {
+	var errCollection *mongo.Collection = utils.OpenCollection(utils.ConnQuery, "error")
 	var ctx, cancel = context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	var err error
@@ -31,7 +31,7 @@ func CreateError(c *gin.Context) {
 		errorType = "resourceError"
 	}
 	if errorType == "undefined" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusOK, common.Response{})
 		return
 	}
 
@@ -40,7 +40,7 @@ func CreateError(c *gin.Context) {
 		jsError.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = errCollection.InsertOne(ctx, jsError)
 		if err != nil {
-			msg := fmt.Sprintf("item not created")
+			msg := fmt.Sprintf("item not created" + err.Error())
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 			return
 		}
@@ -50,7 +50,7 @@ func CreateError(c *gin.Context) {
 		resourceError.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = errCollection.InsertOne(ctx, resourceError)
 		if err != nil {
-			msg := fmt.Sprintf("item not created")
+			msg := fmt.Sprintf("item not created ")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
 			return
 		}
