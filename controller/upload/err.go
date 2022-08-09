@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Dreamerryao/prometheus-server/common"
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
@@ -31,7 +30,7 @@ func CreateError(c *gin.Context) {
 		errorType = "resourceError"
 	}
 	if errorType == "undefined" {
-		c.JSON(http.StatusOK, common.Response{})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "api error"})
 		return
 	}
 

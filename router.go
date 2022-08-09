@@ -13,7 +13,7 @@ func initRouter(r *gin.Engine) {
 		uploadRoute := GRoute.Group("/upload")
 		{
 			uploadRoute.POST("/error", upload.CreateError) //TODO: 错误上报 handler
-			uploadRoute.POST("/api")
+			uploadRoute.POST("/api", upload.CreateApi)
 			uploadRoute.POST("/performance")
 			uploadRoute.POST("/behavior")
 		}
