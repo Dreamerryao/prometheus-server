@@ -9,12 +9,12 @@ type JsError struct {
 
 type ResourceError struct {
 	Base         `json:,inline`
-	ErrorType    string `json:"errorType" bson:"error_type" validate:"required"` //错误类型
-	FileName     string `json:"filename" bson:"file_name"`                       //访问的文件名
-	ErrorMessage string `json:"errorMessage" bson:"error_message"`               //错误信息
-	TagName      string `json:"tagName" bson:"tag_name"`                         //标签名
-	Size         string `json:"size" bson:"size"`                                // 资源大小
-	Time         string `json:"time" bson:"time"`                                // 请求时间
+	ErrorType    string  `json:"errorType" bson:"error_type" validate:"required"` //错误类型
+	FileName     string  `json:"filename" bson:"file_name"`                       //访问的文件名
+	ErrorMessage string  `json:"errorMessage" bson:"error_message"`               //错误信息
+	TagName      string  `json:"tagName" bson:"tag_name"`                         //标签名
+	Size         string  `json:"size" bson:"size"`                                // 资源大小
+	Time         float64 `json:"time" bson:"time"`                                // 请求时间
 }
 
 // unused
