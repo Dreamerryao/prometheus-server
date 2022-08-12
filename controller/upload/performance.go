@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -35,8 +36,9 @@ func CreatePerformance(c *gin.Context) {
 	}
 
 	if performanceType == "timePerformance" {
-		timePerformance.Base.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		timePerformance.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		timePerformance.ID = primitive.NewObjectIDFromTimestamp(time.Now())
+		timePerformance.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		timePerformance.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = performanceCollection.InsertOne(ctx, timePerformance)
 		if err != nil {
 			msg := fmt.Sprintf("item not created" + err.Error())
@@ -45,8 +47,9 @@ func CreatePerformance(c *gin.Context) {
 		}
 	}
 	if performanceType == "paintPerformance" {
-		paintPerformance.Base.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		paintPerformance.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		paintPerformance.ID = primitive.NewObjectIDFromTimestamp(time.Now())
+		paintPerformance.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		paintPerformance.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = performanceCollection.InsertOne(ctx, paintPerformance)
 		if err != nil {
 			msg := fmt.Sprintf("item not created ")

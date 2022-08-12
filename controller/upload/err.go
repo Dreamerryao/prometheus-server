@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -35,8 +36,9 @@ func CreateError(c *gin.Context) {
 	}
 
 	if errorType == "jsError" {
-		jsError.Base.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		jsError.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		jsError.ID = primitive.NewObjectIDFromTimestamp(time.Now())
+		jsError.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		jsError.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = errCollection.InsertOne(ctx, jsError)
 		if err != nil {
 			msg := fmt.Sprintf("item not created" + err.Error())
@@ -45,8 +47,9 @@ func CreateError(c *gin.Context) {
 		}
 	}
 	if errorType == "resourceError" {
-		resourceError.Base.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		resourceError.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		resourceError.ID = primitive.NewObjectIDFromTimestamp(time.Now())
+		resourceError.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		resourceError.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = errCollection.InsertOne(ctx, resourceError)
 		if err != nil {
 			msg := fmt.Sprintf("item not created ")

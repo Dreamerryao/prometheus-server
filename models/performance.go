@@ -1,7 +1,25 @@
 package models
 
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
 type TimePerformance struct {
-	Base                 `json:,inline`
+	// Base                 `json:,inline`
+	ID        primitive.ObjectID `json:"_id" bson:"_id"`
+	Title     string             `json:"title" bson:"title" validate:"required"`
+	Url       string             `json:"url" bson:"url" validate:"required"`
+	Timestamp string             `json:"timestamp" bson:"timestamp"`
+	UserAgent string             `json:"userAgent" bson:"user_agent"`
+	Referrer  string             `json:"referrer" bson:"referrer"`
+	// NavigationType int                `json:"navigationType" bson:"navigation_type"`
+	Type       string    `json:"type" bson:"type" validate:"required"`
+	Created_at time.Time `json:"created_at" bson:"created_at"`
+	Update_at  time.Time `json:"updated_at" bson:"updated_at"`
+
+	// timePerformance
 	PerfType             string  `json:"perf_type" bson:"perf_type" validate:"required"`
 	DnsTime              float64 `json:"dns_time" bson:"dns_time"`
 	ConnectTime          float64 `json:"connect_time" bson:"connect_time"`
@@ -14,7 +32,19 @@ type TimePerformance struct {
 }
 
 type PaintPerformance struct {
-	Base                   `json:,inline`
+	// Base                   `json:,inline`
+	ID        primitive.ObjectID `json:"_id" bson:"_id"`
+	Title     string             `json:"title" bson:"title" validate:"required"`
+	Url       string             `json:"url" bson:"url" validate:"required"`
+	Timestamp string             `json:"timestamp" bson:"timestamp"`
+	UserAgent string             `json:"userAgent" bson:"user_agent"`
+	Referrer  string             `json:"referrer" bson:"referrer"`
+	// NavigationType int                `json:"navigationType" bson:"navigation_type"`
+	Type       string    `json:"type" bson:"type" validate:"required"`
+	Created_at time.Time `json:"created_at" bson:"created_at"`
+	Update_at  time.Time `json:"updated_at" bson:"updated_at"`
+
+	// paintPerformance
 	PerfType               string  `json:"perf_type" bson:"perf_type" validate:"required"`
 	FirstPaint             float64 `json:"first_paint" bson:"first_paint"`
 	FirstContentPaint      float64 `json:"first_content_paint" bson:"first_contentful_paint"`

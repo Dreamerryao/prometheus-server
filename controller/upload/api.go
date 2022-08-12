@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -24,8 +25,9 @@ func CreateApi(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "api error"})
 		return
 	}
-	api.Base.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-	api.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+	api.ID = primitive.NewObjectIDFromTimestamp(time.Now())
+	api.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+	api.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	result, err = apiCollection.InsertOne(ctx, api)
 	if err != nil {
 		msg := fmt.Sprintf("item not created" + err.Error())

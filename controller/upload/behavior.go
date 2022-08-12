@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -35,8 +36,9 @@ func CreateBehavior(c *gin.Context) {
 	}
 
 	if behaviorType == "pvBehavior" {
-		pvBehavior.Base.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		pvBehavior.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		pvBehavior.ID = primitive.NewObjectIDFromTimestamp(time.Now())
+		pvBehavior.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		pvBehavior.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = behaviorCollection.InsertOne(ctx, pvBehavior)
 		if err != nil {
 			msg := fmt.Sprintf("item not created" + err.Error())
@@ -45,8 +47,9 @@ func CreateBehavior(c *gin.Context) {
 		}
 	}
 	if behaviorType == "stayBehavior" {
-		stayBehavior.Base.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-		stayBehavior.Base.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		stayBehavior.ID = primitive.NewObjectIDFromTimestamp(time.Now())
+		stayBehavior.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		stayBehavior.Update_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		result, err = behaviorCollection.InsertOne(ctx, stayBehavior)
 		if err != nil {
 			msg := fmt.Sprintf("item not created ")

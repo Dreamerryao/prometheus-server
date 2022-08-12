@@ -23,7 +23,8 @@ func MongoDBInit() {
 		"mongodb://%s:%s@%s:%d/?authSource=admin&authMechanism=SCRAM-SHA-256",
 		common.MongodbUser,
 		common.MongodbPwd,
-		"127.0.0.1",
+		// "127.0.0.1",
+		"120.55.12.109",
 		27017,
 	)
 	ConnQuery, err = mongo.Connect(MongoCtx, options.Client().ApplyURI(uri))
