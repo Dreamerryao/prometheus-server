@@ -7,6 +7,7 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	go.mongodb.org/mongo-driver v1.10.0
 	go.uber.org/zap v1.21.0
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 )
 
 require (

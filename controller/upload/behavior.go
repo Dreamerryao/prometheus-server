@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -22,12 +23,12 @@ func CreateBehavior(c *gin.Context) {
 	var pvBehavior models.PvBehavior
 	var stayBehavior models.StayBehavior
 	var behaviorType = "undefined"
-	err = c.BindJSON(&pvBehavior)
-	if err == nil {
+	err = c.ShouldBindBodyWith(&pvBehavior, binding.JSON)
+	if err == nil && pvBehavior.BehaviorType == "pv" {
 		behaviorType = "pvBehavior"
 	}
-	err = c.BindJSON(&stayBehavior)
-	if err == nil {
+	err = c.ShouldBindBodyWith(&stayBehavior, binding.JSON)
+	if err == nil && stayBehavior.BehaviorType == "staytime" {
 		behaviorType = "stayBehavior"
 	}
 	if behaviorType == "undefined" {

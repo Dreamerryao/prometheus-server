@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Dreamerryao/prometheus-server/controller/upload"
+	"github.com/Dreamerryao/prometheus-server/controller/vis"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,8 +15,9 @@ func initRouter(r *gin.Engine) {
 		{
 			uploadRoute.POST("/error", upload.CreateError) //TODO: 错误上报 handler
 			uploadRoute.POST("/api", upload.CreateApi)
-			uploadRoute.POST("/performance")
-			uploadRoute.POST("/behavior")
+			uploadRoute.POST("/performance", upload.CreatePerformance)
+			uploadRoute.POST("/behavior", upload.CreateBehavior)
 		}
+		GRoute.GET("/behavior", vis.GetBehaviors)
 	}
 }

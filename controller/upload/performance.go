@@ -22,11 +22,11 @@ func CreatePerformance(c *gin.Context) {
 	var timePerformance models.TimePerformance
 	var paintPerformance models.PaintPerformance
 	var performanceType = "undefined"
-	err = c.BindJSON(&timePerformance)
+	err = c.ShouldBind(&timePerformance)
 	if err == nil {
 		performanceType = "timePerformance"
 	}
-	err = c.BindJSON(&paintPerformance)
+	err = c.ShouldBind(&paintPerformance)
 	if err == nil {
 		performanceType = "paintPerformance"
 	}

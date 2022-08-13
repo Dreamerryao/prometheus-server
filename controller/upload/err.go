@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -22,12 +23,12 @@ func CreateError(c *gin.Context) {
 	var jsError models.JsError
 	var resourceError models.ResourceError
 	var errorType = "undefined"
-	err = c.BindJSON(&jsError)
-	if err == nil {
+	err = c.ShouldBindBodyWith(&jsError, binding.JSON)
+	if err == nil && jsError.ErrorType == "jsError" {
 		errorType = "jsError"
 	}
-	err = c.BindJSON(&resourceError)
-	if err == nil {
+	err = c.ShouldBindBodyWith(&resourceError, binding.JSON)
+	if err == nil && resourceError.ErrorType == "resourceError" {
 		errorType = "resourceError"
 	}
 	if errorType == "undefined" {

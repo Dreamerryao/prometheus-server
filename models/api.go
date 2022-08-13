@@ -30,5 +30,5 @@ type Api struct {
 	Success        bool    `json:"success" bson:"success" `
 	Status         string  `json:"status" bson:"status" `
 	Duration       float64 `json:"duration" bson:"duration" `
-	ErrorMessage   string  `json:"error_message" bson:"error_message" `
+	ErrorMessage   string  `json:"errorMessage" bson:"error_message" `
 }

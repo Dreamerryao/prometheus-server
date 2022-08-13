@@ -20,7 +20,7 @@ func CreateApi(c *gin.Context) {
 	var err error
 	var result *mongo.InsertOneResult
 	var api models.Api
-	err = c.BindJSON(&api)
+	err = c.ShouldBind(&api)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "api error"})
 		return
