@@ -19,5 +19,8 @@ func initRouter(r *gin.Engine) {
 			uploadRoute.POST("/behavior", upload.CreateBehavior)
 		}
 		GRoute.GET("/behavior", vis.GetBehaviors)
+		GRoute.GET("/error/js", vis.GetJsErrors)
+		GRoute.GET("/error/resource", vis.GetResourceErrors)
+		GRoute.GET("/http", vis.GetApis)
 	}
 }
