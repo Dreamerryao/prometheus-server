@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Dreamerryao/prometheus-server/controller/test"
 	"github.com/Dreamerryao/prometheus-server/controller/upload"
 	"github.com/Dreamerryao/prometheus-server/controller/vis"
 	"github.com/gin-gonic/gin"
@@ -22,5 +23,13 @@ func initRouter(r *gin.Engine) {
 		GRoute.GET("/error/js", vis.GetJsErrors)
 		GRoute.GET("/error/resource", vis.GetResourceErrors)
 		GRoute.GET("/http", vis.GetApis)
+
+		testRoute := GRoute.Group("/test")
+		{
+			testRoute.GET("/400", test.Test400)
+			testRoute.GET("/502", test.Test502)
+			testRoute.GET("/500", test.Test500)
+			testRoute.GET("/200", test.Test200)
+		}
 	}
 }
