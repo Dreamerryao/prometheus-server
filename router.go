@@ -23,7 +23,8 @@ func initRouter(r *gin.Engine) {
 		GRoute.GET("/error/js", vis.GetJsErrors)
 		GRoute.GET("/error/resource", vis.GetResourceErrors)
 		GRoute.GET("/http", vis.GetApis)
-
+		GRoute.POST("/performance/timing", vis.GetTimePerformanceByUrl)
+		GRoute.POST("/performance/paint", vis.GetPaintPerformanceByUrl)
 		testRoute := GRoute.Group("/test")
 		{
 			testRoute.GET("/400", test.Test400)

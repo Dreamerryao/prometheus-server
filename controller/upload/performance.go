@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -22,12 +23,12 @@ func CreatePerformance(c *gin.Context) {
 	var timePerformance models.TimePerformance
 	var paintPerformance models.PaintPerformance
 	var performanceType = "undefined"
-	err = c.ShouldBind(&timePerformance)
-	if err == nil {
+	err = c.ShouldBindBodyWith(&timePerformance, binding.JSON)
+	if err == nil && timePerformance.PerfType == "timing" {
 		performanceType = "timePerformance"
 	}
-	err = c.ShouldBind(&paintPerformance)
-	if err == nil {
+	err = c.ShouldBindBodyWith(&paintPerformance, binding.JSON)
+	if err == nil && paintPerformance.PerfType == "paint" {
 		performanceType = "paintPerformance"
 	}
 	if performanceType == "undefined" {
