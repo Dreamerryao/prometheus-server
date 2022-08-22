@@ -9,6 +9,7 @@ import (
 	"github.com/Dreamerryao/prometheus-server/models"
 	"github.com/Dreamerryao/prometheus-server/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -20,7 +21,7 @@ func CreateApi(c *gin.Context) {
 	var err error
 	var result *mongo.InsertOneResult
 	var api models.Api
-	err = c.ShouldBind(&api)
+	err = c.ShouldBindBodyWith(&api, binding.JSON)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "api error"})
 		return
