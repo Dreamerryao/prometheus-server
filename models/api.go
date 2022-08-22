@@ -28,7 +28,7 @@ type Api struct {
 	RequestHeader  string  `json:"requestHeader" bson:"request_header"`
 	ResponseHeader string  `json:"responseHeader" bson:"response_header" `
 	Success        bool    `json:"success" bson:"success" `
-	Status         string  `json:"status" bson:"status" `
+	Status         float64 `json:"status" bson:"status" `
 	Duration       float64 `json:"duration" bson:"duration" `
 	ErrorMessage   string  `json:"errorMessage" bson:"error_message" `
 }
